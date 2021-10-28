@@ -35,7 +35,7 @@ export default function ListCities(props) {
       ) : (
         <View>
           <ActivityIndicator size="large" />
-          <Text style={{textAlign: "center"}}>Cargando Ciudades...</Text>
+          <Text style={{ textAlign: "center" }}>Cargando Ciudades...</Text>
         </View>
       )}
     </SafeAreaView>
@@ -44,10 +44,15 @@ export default function ListCities(props) {
 //COMPONENTE CIUDAD
 function Ciudad(props) {
   const { ciudad, navigation } = props;
-  const { name, id } = ciudad.item;
+  const { name, id, latitude, longitude } = ciudad.item;
 
   const irCiudad = () => {
-    navigation.navigate("City");
+    navigation.navigate("City", {
+      cityId: id,
+      cityName: name,
+      latitude,
+      longitude,
+    });
   };
 
   return (
