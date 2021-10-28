@@ -1,85 +1,98 @@
-import React , { useState, useEffect} from 'react'
-import { StyleSheet, Text, View , FlatList , Image  } from 'react-native';
-import { SearchBar, ListItem , Icon } from 'react-native-elements';
-import ListCities from '../components/ListCities';
+import React, { useState, useCallback, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { StyleSheet, View } from "react-native";
+import { SearchBar, Icon } from "react-native-elements";
+import ListCities from "../components/ListCities";
+import { database } from "../utils/database";
 
 export default function Cities(props) {
-    const { navigation } = props;
- 
-    const [totalCiudades, setTotalCiudades] = useState(0);
-    const [cargandoCiudades, setCargandoCiudades] = useState(false);
-    // const [startCiudades, setStartCiudades] =(null); //para scroll infinito
-    const [ciudades, setCiudades] = useState([  {  "id": "1", "city": "Buenos Aires", "temperature": "25" },
-    { "id": "2" , "city": "Rosario", "temperature": "21" },
-    { "id": "3" ,"city": "Mar del Plata.", "state": "27" },
-    { "id": "4" ,"city": "	Posadas", "temperature": "29" },
-    { "id": "5" ,"city": "Resistencia", "temperature": "28" },
-    { "id": "6" ,"city": "Comodoro Rivadavia", "temperature": "12"},
-    { "id": "7" ,"city": "Quilmes", "temperature": "25"},
-    { "id": "8" ,"city": "Rio Cuarto", "temperature": "23" },
-    { "id": "9" ,"city": "San Miguel de Tucumán", "temperature": "27"},
-    { "id": "10" ,"city": "Viedma", "temperature": "12" }]);
+  const { navigation } = props;
 
-    const [busqueda, setBusqueda] = useState(ciudades);
+  const [ciudades, setCiudades] = useState([]);
+  const [ciudadesFiltradas, setCiudadesFiltradas] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
 
-    const irAgregarCiudad = () =>{
-      navigation.navigate("addCities")
-   }
+  const irAgregarCiudad = () => {
+    navigation.navigate("addCities");
+  };
 
+  const getDatabaseCities = () => {
+    database
+      .getCities()
+      .then((cities) => {
+        setCiudades(cities);
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
+  };
 
-  const borrarCiudad = ciudadId => {
+  const borrarCiudad = async (ciudadId) => {
+    await database.deleteCity(ciudadId);
+    getDatabaseCities();
+  };
 
-   const nuevasCiudades =  busqueda.filter(item => item.id != ciudadId )
-   setBusqueda(nuevasCiudades)
-    
-  } 
+  // cada vez que se hace foco en la pantalla, voy a buscar las ciudades
+  useFocusEffect(
+    useCallback(() => {
+      setCiudades([]);
+      getDatabaseCities();
+    }, [])
+  );
 
-  const FiltroBusqueda = (ciudadNombre) =>{
-    setBusqueda( ciudades.filter(i => i.city.toLowerCase().includes(ciudadNombre.toLowerCase())))
-
-
-  }
+  useEffect(() => {
+    // filtro las ciudades según el texto ingresado en el searchbar
+    setCiudadesFiltradas(
+      ciudades.filter((city) => {
+        return (
+          busqueda === "" ||
+          city.name.toLowerCase().includes(busqueda.toLowerCase())
+        );
+      })
+    );
+  }, [busqueda, ciudades]);
 
   return (
     <View style={styles.viewBody}>
-       <SearchBar
-       containerStyle={{backgroundColor: 'white', borderColor:'#fff' , borderTopWidth:0,
-       borderBottomWidth:0}}
-          inputStyle={{backgroundColor: 'white'}}
-          inputContainerStyle={{backgroundColor: 'white'}}
-          
-      placeholder="Buscar ciudad..."
-      onChangeText={(e)=> FiltroBusqueda(e)}
-      value={busqueda}
-      color="#007aff"
-      containerStyle={StyleSheet.barraBusqueda}
+      <SearchBar
+        containerStyle={{
+          backgroundColor: "white",
+          borderColor: "white",
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+        }}
+        inputStyle={{ backgroundColor: "white" }}
+        inputContainerStyle={{ backgroundColor: "white" }}
+        placeholder="Buscar ciudad..."
+        onChangeText={(e) => setBusqueda(e)}
+        value={busqueda}
+        color="#007aff"
       />
-   
 
-      <ListCities busqueda={busqueda} borrarCiudad={borrarCiudad}  /> 
-      <Icon  reverse type="material-community"
-      name="plus"
-      color="#00a680"
-      containerStyle={styles.btnContainer}  onPress={irAgregarCiudad}
+      <ListCities ciudades={ciudadesFiltradas} borrarCiudad={borrarCiudad} />
+      <Icon
+        reverse
+        type="material-community"
+        name="plus"
+        color="#00a680"
+        containerStyle={styles.btnContainer}
+        onPress={irAgregarCiudad}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  viewBody:{
-    flex:1,
-    backgroundColor:"#ffff"
+  viewBody: {
+    flex: 1,
+    backgroundColor: "white",
   },
-  btnContainer:{
-    position:"absolute",
-    bottom:10,
-    right:10,
-    shadowColor:"black",
-    shadowOffset:{ width:2, height:2},
-    shadowOpacity:0.5,
-
-
-  }
-
-})
+  btnContainer: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+  },
+});
