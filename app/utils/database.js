@@ -4,10 +4,11 @@ const db = SQLite.openDatabase("db.db");
 
 const getCities = () => {
   return new Promise((resolve, reject) => {
+    let cities = [];
     db.transaction(
       (tx) => {
         tx.executeSql("SELECT * FROM cities", [], (_, { rows: { _array } }) => {
-          resolve(_array);
+          cities = _array;
         });
       },
       (_t, error) => {
@@ -15,8 +16,8 @@ const getCities = () => {
         console.log(error);
         reject(error);
       },
-      (_t, _success) => {
-        console.log("loaded cities");
+      () => {
+        resolve(cities);
       }
     );
   });
@@ -66,8 +67,15 @@ const setupDatabaseAsync = () => {
     db.transaction(
       (tx) => {
         tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS cities (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, latitude TEXT, longitude TEXT);"
+          "CREATE TABLE IF NOT EXISTS cities (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, latitude TEXT NOT NULL, longitude TEXT NOT NULL);"
         );
+
+        // tx.executeSql(
+        //   "CREATE TABLE IF NOT EXISTS provincias (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL);"
+        // );
+
+        // tx.executeSql("INSERT OR REPLACE INTO provincias(id, name) VALUES(1,'Ciudad de Buenos Aires')");
+        // tx.executeSql("INSERT OR REPLACE INTO provincias(id, name) VALUES(2,'Buenos Aires')");
       },
       (_, error) => {
         console.log("db error creating tables");

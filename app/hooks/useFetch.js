@@ -2,7 +2,7 @@ import React from "react";
 
 export default function useFetch() {
   const [response, setResponse] = React.useState(null);
-  const [hasError, setHasError] = React.useState(null);
+  const [hasError, setHasError] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [refetch, setRefetch] = React.useState(false);
   const [url, setUrl] = React.useState("");
@@ -10,6 +10,8 @@ export default function useFetch() {
   React.useEffect(() => {
     if (refetch) {
       const fetchData = async () => {
+        setResponse(null);
+        setResponse(false);
         setIsLoading(true);
 
         try {
@@ -22,6 +24,7 @@ export default function useFetch() {
         } catch (error) {
           setHasError(error);
           setIsLoading(false);
+          setResponse(null);
         }
       };
 
