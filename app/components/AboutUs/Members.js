@@ -12,12 +12,14 @@ export default function Members() {
                     rounded
                     size="large"
                     showEditButton
-                    containerStyle={styles.avatar}
+                    avatarStyle={styles.avatar}
                     source={require("../../../assets/img/avatar-default.jpg")}       
                 >
                 </Avatar>
-                <Text style={styles.textName}>Diego Delías</Text>
-                <Text style={styles.textDescription}>Descripcion lorem ipsum</Text>
+                <View style={{marginLeft: 15, flex: 1}}>
+                    <Text style={styles.textName}>Diego Delías</Text>
+                    <Text style={{ flexShrink: 1, fontSize: 14 }}>Descripcion lorem ipsum</Text>
+                </View>
             </View>
             <Card.Divider style={styles.divisor}/>
             <View style={{ flexDirection: "row"}}>
@@ -29,8 +31,10 @@ export default function Members() {
                     source={require("../../../assets/img/avatar-default.jpg")}       
                 >
                 </Avatar>
-                <Text style={styles.textName}>Federico Pandullo</Text>
-                <Text style={styles.textDescription}>Descripcion lorem ipsum</Text>
+                <View style={{marginLeft: 15, flex: 1}}>
+                    <Text style={styles.textName}>Federico Pandullo</Text>
+                    <Text style={{ flexShrink: 1, fontSize: 14 }}>Descripcion lorem ipsum</Text>
+                </View>
             </View>
             <Card.Divider style={styles.divisor}/>
             <Card.Divider/>
@@ -43,8 +47,14 @@ export default function Members() {
                     source={require("../../../assets/img/avatar-default.jpg")}       
                 >
                 </Avatar>
-                <Text style={styles.textName}>Daniela Pappa</Text>
-                <Text style={styles.textDescription}>Descripcion lorem ipsum</Text>
+                <View style={{marginLeft: 15, flex: 1}}>
+                    <Text style={styles.textName}>Daniela Pappa</Text>
+                    <Text style={{ flexShrink: 1, fontSize: 14 }}>Soy Licenciada en Sistemas, trabajo como 
+                            Analista Funcional hace 8 años. A comienzos de este año participe
+                            del curso Desarrollo Fullstack Python de Codo a Codo. Me interesa
+                            aprender sobre desarrollo web y mobile, y la utilización del lenguaje
+                            Python en ciencia de datos.</Text>
+                </View>
             </View>
         </Card>
     )
@@ -52,8 +62,7 @@ export default function Members() {
 
 const styles = StyleSheet.create({
     avatar: {
-        marginTop: 20,
-        marginRight: 20,
+        alignSelf: "center"
     }, 
     divisor: {
         marginTop: 10,
@@ -61,9 +70,5 @@ const styles = StyleSheet.create({
     textName: { 
         marginTop: 20,
         fontSize: 20,
-    },
-    textDescription: {
-        marginTop: 60,
-        marginLeft: -70,
     },
 })
