@@ -46,6 +46,8 @@ export default function AddCity() {
     setCitySelected(possibleCitySelected);
   };
 
+
+
   useFocusEffect(
     useCallback(() => {
       setTextToSearch("");
