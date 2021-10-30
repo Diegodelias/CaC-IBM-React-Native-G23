@@ -18,7 +18,7 @@ export default function Members() {
                 </Avatar>
                 <View style={{marginLeft: 15, flex: 1}}>
                     <Text style={styles.textName}>Diego Delías</Text>
-                    <Text style={{ flexShrink: 1, fontSize: 14 }}>Me inicié en el mundo de la programación  en el año 2017 como alumno de la primer "versión" de Codo a Codo.Entre 2018 a 2020 cursé la tecnicatura en análisis de sistemas en el IFTS N°16 y el año pasado participé en el curso FullStack - Desarrollo Web (JavaScript/Node.JS)</Text>
+                    <Text style={{ flexShrink: 1, fontSize: 14 }}>Me inicié en el mundo de la programación  en el año 2017 como alumno de la primer "versión" de Codo a Codo.Entre 2018 a 2020 cursé la tecnicatura en análisis de sistemas en el IFTS N°16 y el año pasado participé en el curso FullStack - Desarrollo Web (JavaScript/Node.JS) de Codo a Codo</Text>
                 </View>
             </View>
             <Card.Divider style={styles.divisor}/>
