@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { OPEN_WEATHER_API_KEY } from "@env";
 import useFetch from "./useFetch";
 const OPEN_WEATHER_BASE_API = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -61,7 +60,7 @@ export default function useWeatherSimple() {
   useEffect(() => {
     if (latitude && longitude) {
       setUrl(
-        `${OPEN_WEATHER_BASE_API}?lat=${latitude}&lon=${longitude}&units=metric&lang=es&appid=${OPEN_WEATHER_API_KEY}`
+        `${OPEN_WEATHER_BASE_API}?lat=${latitude}&lon=${longitude}&units=metric&lang=es&appid=${process.env.OPEN_WEATHER_API_KEY}`
       );
       setRefetch(true);
     }

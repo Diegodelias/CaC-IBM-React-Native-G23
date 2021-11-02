@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { OPEN_WEATHER_API_KEY } from "@env";
 import useFetch from "./useFetch";
 const OPEN_WEATHER_BASE_API = "http://api.openweathermap.org/geo/1.0/direct";
 
@@ -25,7 +24,7 @@ export default function useGeocodingSimple() {
       setUrl(
         `${OPEN_WEATHER_BASE_API}?q=${encodeURIComponent(
           cityToSearch
-        )},AR&limit=5&appid=${OPEN_WEATHER_API_KEY}`
+        )},AR&limit=5&appid=${process.env.OPEN_WEATHER_API_KEY}`
       );
 
       setRefetch(true);
