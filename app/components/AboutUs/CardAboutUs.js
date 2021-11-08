@@ -4,7 +4,7 @@ import { Card, Button } from 'react-native-elements';
 import Modal from "../Modal";
 
 export default function CardAboutUs(props) {
-    const { title, text} = props;
+    const { title, text, content} = props;
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [description, setDescription] = useState("");
 
@@ -18,7 +18,7 @@ export default function CardAboutUs(props) {
             <Button
                 title="Conoce más"
                 onPress={() => {
-                    setDescription("Hola...");
+                    setDescription(content);
                     setIsVisibleModal(true);
                 }}
             />

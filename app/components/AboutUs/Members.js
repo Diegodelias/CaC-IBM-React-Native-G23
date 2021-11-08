@@ -12,7 +12,7 @@ export default function Members() {
           rounded
           size="large"
           showEditButton
-          avatarStyle={styles.avatar}
+          containerStyle={styles.avatar}
           source={require("../../../assets/img/avatar-default.jpg")}
         ></Avatar>
         <View style={{ marginLeft: 15, flex: 1 }}>
@@ -45,7 +45,6 @@ export default function Members() {
         </View>
       </View>
       <Card.Divider style={styles.divisor} />
-      <Card.Divider />
       <View style={{ flexDirection: "row" }}>
         <Avatar
           rounded
