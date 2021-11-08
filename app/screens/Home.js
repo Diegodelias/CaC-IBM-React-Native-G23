@@ -5,7 +5,7 @@ import CardHome from '../components/Home/CardHome';
 export default function Home() {
   return (
     <View>
-      <Text style={styles.name}>Nombre de la App</Text>
+      <Text style={styles.name}>The Weather Buddy</Text>
       <CardHome title="Descripción" 
                 text="Esta App permite consultar el estado del clima en tiempo real, 
                       seleccionando ciudades de Argentina que se encuentren en la base 
