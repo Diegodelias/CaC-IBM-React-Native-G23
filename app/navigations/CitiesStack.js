@@ -28,6 +28,7 @@ export default function CitiesStack() {
       <Stack.Screen
         name="City"
         component={City}
+        options={{ title: "Ciudad" }}
   
       />
   
