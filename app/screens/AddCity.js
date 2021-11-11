@@ -42,7 +42,7 @@ export default function AddCity({ navigation }) {
           label: city.name,
           value: index,
           size: 20,
-          color: "#00a280",
+          color: "#13b5f1",
           labelStyle: { fontSize: 18 },
         }))
       );
@@ -149,7 +149,7 @@ export default function AddCity({ navigation }) {
             buttonStyle={{
               marginLeft: 10,
               marginRight: 10,
-              backgroundColor: "#00a280",
+              backgroundColor: "#13b5f1",
             }}
             onPress={saveCity}
           />
