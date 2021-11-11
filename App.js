@@ -30,7 +30,7 @@ export default function App() {
   } else {
     return (
       <RootSiblingParent>
-        <StatusBar style="auto" backgroundColor="#00a680" />
+        <StatusBar style="auto" backgroundColor="#13b5f1" />
         <Navigation />
       </RootSiblingParent>
     );
