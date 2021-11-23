@@ -1,6 +1,12 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, SearchBar } from "react-native-elements";
+import React, { useState, useCallback, useEffect, createRef } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
+import { Button, SearchBar, Icon } from "react-native-elements";
 import RadioGroup from "react-native-radio-buttons-group";
 import MapView from "react-native-maps";
 import Toast from "react-native-root-toast";
@@ -24,6 +30,7 @@ export default function AddCity({ navigation }) {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+  const inputSearchRef = createRef();
 
   useFocusEffect(
     useCallback(() => {
@@ -31,6 +38,7 @@ export default function AddCity({ navigation }) {
       setCitiesForRadio([]);
       setCityToSearch(null);
       setCitySelected(null);
+      inputSearchRef.current.focus();
     }, [])
   );
 
@@ -116,9 +124,12 @@ export default function AddCity({ navigation }) {
         onSubmitEditing={searchCity}
         onBlur={searchCity}
         onClear={() => setTextToSearch("")}
+        ref={inputSearchRef}
       />
       {isLoading ? (
-        <Text style={{ textAlign: "center" }}>Buscando ciudades...</Text>
+        <Text style={{ textAlign: "center" }}>
+          Buscando ciudades... <ActivityIndicator color={"#13b5f1"} />
+        </Text>
       ) : hasError ? (
         <Text>Hubo un problema al buscar la ciudad</Text>
       ) : possibleCities && possibleCities.length > 0 ? (
@@ -127,11 +138,6 @@ export default function AddCity({ navigation }) {
             radioButtons={citiesForRadio}
             onPress={onPressRadioButton}
           />
-          {/* {possibleCities.map((city, index) => (
-            <View key={city.name + index}>
-              <Text>{city.name}</Text>
-            </View>
-          ))} */}
         </View>
       ) : (
         <Text style={{ textAlign: "center" }}>
@@ -150,6 +156,14 @@ export default function AddCity({ navigation }) {
       {
         <View style={{ marginTop: 20 }}>
           <Button
+            icon={
+              <Icon
+                name="content-save-outline"
+                type="material-community"
+                color="white"
+                style={{ marginRight: 10 }}
+              />
+            }
             title="Guardar"
             buttonStyle={{
               marginLeft: 10,
