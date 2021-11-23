@@ -23,14 +23,26 @@ const getCities = () => {
   });
 };
 
+/**
+ * Inserta una ciudad en la base de datos
+ * @param {Object} param0
+ * @param {String} param0.cityName Nombre de la ciudad
+ * @param {String} param0.latitude Latitud de la ciudad
+ * @param {String} param0.longitude Longitud de la ciudad
+ * @returns {Promise<number>}
+ */
 const insertCity = ({ cityName, latitude = null, longitude = null }) => {
   return new Promise((resolve, reject) => {
+    let insertedId = null;
     db.transaction(
       (tx) => {
         tx.executeSql(
           "INSERT INTO cities (name,latitude,longitude) VALUES (?,?,?)",
-          [cityName, latitude, longitude]
-        );
+          [cityName, latitude, longitude],
+          (_, { insertId }) => {
+            insertedId = insertId;
+          }
+        )
       },
       (t, error) => {
         console.log("db error insertCities");
@@ -38,12 +50,17 @@ const insertCity = ({ cityName, latitude = null, longitude = null }) => {
         reject(error);
       },
       (t, success, a) => {
-        resolve();
+        resolve(insertedId);
       }
     );
   });
 };
 
+/**
+ * Elimina una ciudad de la base de datos
+ * @param {string} cityId Id de la ciudad
+ * @returns {Promise<void>}
+ */
 const deleteCity = (cityId) => {
   return new Promise((resolve, reject) => {
     db.transaction(
@@ -69,13 +86,6 @@ const setupDatabaseAsync = () => {
         tx.executeSql(
           "CREATE TABLE IF NOT EXISTS cities (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL, latitude TEXT NOT NULL, longitude TEXT NOT NULL);"
         );
-
-        // tx.executeSql(
-        //   "CREATE TABLE IF NOT EXISTS provincias (id INTEGER PRIMARY KEY NOT NULL, name TEXT NOT NULL);"
-        // );
-
-        // tx.executeSql("INSERT OR REPLACE INTO provincias(id, name) VALUES(1,'Ciudad de Buenos Aires')");
-        // tx.executeSql("INSERT OR REPLACE INTO provincias(id, name) VALUES(2,'Buenos Aires')");
       },
       (_, error) => {
         console.log("db error creating tables");

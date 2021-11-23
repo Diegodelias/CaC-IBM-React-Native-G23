@@ -72,14 +72,19 @@ export default function AddCity({ navigation }) {
     });
   };
 
-  const saveCity = () => {
+  const saveCity = async () => {
     if (citySelected) {
-      database.insertCity({
+      const cityId = await database.insertCity({
         cityName: citySelected.name,
         latitude: citySelected.lat,
         longitude: citySelected.lon,
       });
-      navigation.navigate("cities");
+      navigation.navigate("City", {
+        cityId: cityId,
+        cityName: citySelected.name,
+        latitude: citySelected.lat,
+        longitude: citySelected.lon,
+      });
     } else {
       Toast.show("Por favor seleccione una ciudad", {
         position: Toast.positions.CENTER,
