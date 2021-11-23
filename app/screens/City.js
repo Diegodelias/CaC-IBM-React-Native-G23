@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Card } from 'react-native-elements';
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import { Card, Icon } from "react-native-elements";
 import MapView from "react-native-maps";
 import useWeatherSimple from "../hooks/useWeatherSimple";
 
@@ -25,36 +32,85 @@ export default function City() {
   }, [latitude, longitude]);
 
   const getIcon = (iconId) => {
-    let route = ''
-  
-    route = getImage(iconId)
+    let route = "";
 
-    return (<Image
-      source={route}
-      resizeMode="cover"
-      style={{ width: 150, height: 150 }}
-    />)
-  }
+    route = getImage(iconId);
+
+    return (
+      <Image
+        source={route}
+        resizeMode="cover"
+        style={{ width: 150, height: 150 }}
+      />
+    );
+  };
 
   return (
-    <View>
+    <ScrollView>
       <Text style={styles.title}>{cityName}</Text>
 
-      {
-        cityData && (<Card>
-          <Card.Title style={{ fontSize:20 }}>Clima</Card.Title>
-          <View style={{ flexDirection: "row" }}>
-            {getIcon(cityData.weather[0].icon)}
-            <View>
-              <Text style={{ fontSize:20, marginBottom: 10 }}>{cityData.weather[0].description}</Text>
-              <Text style={{ fontSize:18 }}>Temperatura Actual: </Text>
-              <Text style={{ textAlign: "center", fontSize:20 }}>{cityData.main.temp} C°</Text>
-              <Text style={{ fontSize:18 }}>Sensación Térmica: </Text> 
-              <Text style={{ textAlign: "center", fontSize:20 }}>{cityData.main.feels_like} C°</Text>
+      {isLoading ? (
+        <Text style={{ textAlign: "center", fontSize: 20, marginVertical: 10 }}>
+          Obteniedo clima... <ActivityIndicator color={"#13b5f1"} />
+        </Text>
+      ) : hasError ? (
+        <Text>Hubo un error al obtener el clima</Text>
+      ) : (
+        cityData && (
+          <Card containerStyle={{ marginBottom: 20 }}>
+            <View style={{ flexDirection: "row" }}>
+              {getIcon(cityData.weather[0].icon)}
+              <View>
+                <Text style={{ fontSize: 20, marginBottom: 10 }}>
+                  {cityData.weather[0].description}
+                </Text>
+
+                <Text style={styles.measureTitle}>Temperatura actual</Text>
+
+                <Text style={styles.temperature}>
+                  <Icon name="thermometer" type="material-community" />
+                  {cityData.main.temp} °C
+                </Text>
+
+                <Text style={styles.measureTitle}>Sensación térmica</Text>
+                <Text style={styles.temperature}>
+                  <Icon name="thermometer" type="material-community" />
+                  {cityData.main.feels_like} °C
+                </Text>
+              </View>
             </View>
-          </View>
-        </Card>)
-      }
+            <View
+              style={{
+                marginTop: 10,
+                flexDirection: "row",
+                alignContent: "center",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <View style={styles.measure}>
+                <Icon name="water-percent" type="material-community" />
+                <Text style={{ textAlign: "center" }}>
+                  {cityData.main.humidity} %
+                </Text>
+              </View>
+              <View style={styles.measure}>
+                <Icon name="gauge" type="material-community" />
+                <Text style={{ textAlign: "center" }}>
+                  {cityData.main.pressure} hPa
+                </Text>
+              </View>
+              <View style={styles.measure}>
+                <Icon name="weather-windy" type="material-community" />
+                <Text style={{ textAlign: "center" }}>
+                  {cityData.wind.speed} m/s
+                </Text>
+              </View>
+            </View>
+          </Card>
+        )
+      )}
+
       <MapView
         style={{ height: 400, width: "100%" }}
         region={{
@@ -64,57 +120,64 @@ export default function City() {
           longitudeDelta: 0.0421,
         }}
       />
-      <Text>{cityId}</Text>
-      <Text>{latitude}</Text>
-      <Text>{longitude}</Text>
-      <Text>{JSON.stringify(cityData)}</Text>
-    </View>
+    </ScrollView>
   );
 }
 
 function getImage(input) {
-
   switch (input) {
     case "01d":
-      return require('../../assets/open-weather-icons/01d.png')
+      return require("../../assets/open-weather-icons/01d.png");
     case "01n":
-      return require('../../assets/open-weather-icons/01n.png') 
+      return require("../../assets/open-weather-icons/01n.png");
     case "02d":
-      return require('../../assets/open-weather-icons/02d.png')
+      return require("../../assets/open-weather-icons/02d.png");
     case "02n":
-      return require('../../assets/open-weather-icons/02n.png')
+      return require("../../assets/open-weather-icons/02n.png");
     case "03d":
     case "03n":
-      return require('../../assets/open-weather-icons/03d.png')  
+      return require("../../assets/open-weather-icons/03d.png");
     case "04d":
-    case "04n": 
-      return require('../../assets/open-weather-icons/04d.png')
+    case "04n":
+      return require("../../assets/open-weather-icons/04d.png");
     case "09d":
     case "09n":
-      return require('../../assets/open-weather-icons/09d.png')
+      return require("../../assets/open-weather-icons/09d.png");
     case "10d":
-      return require('../../assets/open-weather-icons/10d.png')
+      return require("../../assets/open-weather-icons/10d.png");
     case "10n":
-      return require('../../assets/open-weather-icons/10n.png')
+      return require("../../assets/open-weather-icons/10n.png");
     case "11d":
     case "11n":
-      return require('../../assets/open-weather-icons/11d.png')
+      return require("../../assets/open-weather-icons/11d.png");
     case "13d":
-    case "13n": 
-      return require('../../assets/open-weather-icons/13d.png')
+    case "13n":
+      return require("../../assets/open-weather-icons/13d.png");
     case "50d":
     case "50n":
-      return require('../../assets/open-weather-icons/50d.png')  
+      return require("../../assets/open-weather-icons/50d.png");
     default:
-      return require('../../assets/open-weather-icons/no-icon.png') 
+      return require("../../assets/open-weather-icons/no-icon.png");
   }
 }
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 5,
+    marginTop: 10,
     textAlign: "center",
-    fontSize: 24,
-    fontWeight: "bold"
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  temperature: {
+    fontSize: 20,
+    textAlign: "center",
+  },
+  measure: {
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  measureTitle: {
+    fontSize: 18,
   },
 });
