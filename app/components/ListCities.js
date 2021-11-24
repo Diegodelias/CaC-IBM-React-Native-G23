@@ -35,7 +35,7 @@ export default function ListCities(props) {
       ) : (
         <View>
           <ActivityIndicator size="large" />
-          <Text style={{ textAlign: "center" }}>Cargando Ciudades...</Text>
+          <Text style={{ textAlign: "center" }}>No se han cargado ciudades...</Text>
         </View>
       )}
     </SafeAreaView>

@@ -59,8 +59,13 @@ export default function AddCity({ navigation }) {
 
   const searchCity = () => {
     if (textToSearch.length < 3) {
-      console.log("Escriba al menos 3 caracteres");
+      Toast.show("Escriba al menos 3 caracteres", {
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+      });
       setCityToSearch(null);
+      inputSearchRef.current.focus();
     } else {
       setCitySelected(null);
       setCityToSearch(textToSearch);

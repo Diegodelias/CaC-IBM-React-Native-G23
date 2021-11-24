@@ -24,8 +24,6 @@ export default function City() {
     setLongitude,
   } = useWeatherSimple();
 
-  console.log(cityData);
-
   useEffect(() => {
     setLatitude(latitude);
     setLongitude(longitude);
