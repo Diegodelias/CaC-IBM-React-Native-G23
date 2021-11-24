@@ -1,8 +1,11 @@
 {
   "expo": {
-    "name": "app-clima-grupo-23",
-    "slug": "app-clima-grupo-23",
-    "version": "1.0.0",
+    "name": "The Weather Buddy",
+    "owner": "cac-2021-ibm-mobile-grupo-23",
+    "slug": "the-weather-buddy",
+    "description": "App desarrollada para Codo a Codo + IBM",
+    "githubUrl": "https://github.com/fedee13/CaC-IBM-React-Native-G23",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -17,9 +20,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cacgrupo23.theweatherbuddy"
     },
+    "primaryColor": "#13b5f1",
     "android": {
+      "package": "com.cacgrupo23.theweatherbuddy",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
