@@ -56,6 +56,10 @@ Si quieren ver la aplicación compilada dejamos el siguiente link sin necesidad 
 
 [Figma](https://www.figma.com/file/Rqpj9aynTduQwb3LcmHtKQ/PantallasAppClima?node-id=0%3A1)
 
+### Persona canva
+
+[Figma](https://www.figma.com/file/xiDHmfPpUV793NmrrxrR4z/Persona-(Community)?node-id=1%3A2)
+
 ### Autores :black_nib:
 
 * **Federico Pandullo**
