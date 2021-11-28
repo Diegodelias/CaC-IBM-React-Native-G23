@@ -5,7 +5,7 @@
     "slug": "the-weather-buddy",
     "description": "App desarrollada para Codo a Codo + IBM",
     "githubUrl": "https://github.com/fedee13/CaC-IBM-React-Native-G23",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
